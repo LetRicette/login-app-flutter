@@ -47,7 +47,7 @@ class InputTextWidget extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25.0),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Colors.white54,
             width: 2.0,
           ),
         ),
