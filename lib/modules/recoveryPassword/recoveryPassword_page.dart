@@ -9,6 +9,9 @@ class RecoveryPasswordPage extends StatefulWidget {
 }
 
 class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,40 +50,52 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                       ),
                     ),
                     Form(
+                        key: _formKey,
                         child: Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Column(
-                        children: [
-                          InputTextWidget(
-                              label: "Email",
-                              validator: (value) =>
-                                  value!.isEmpty ? "Vazio" : null,
-                              onChange: (value) {
-                                //controller.onChanged(email: value);
-                              }),
-                        ],
-                      ),
-                    )),
-                    ElevatedButton(
-                      child: Text(
-                        'Enviar email',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          onPrimary: Colors.purple,
-                          shadowColor: Colors.purple,
-                          primary: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 10)),
-                      onPressed: () {
-                        // if (controller.login()) {
-                        //   Navigator.pushReplacementNamed(context, "/home");
-                        // }
-                      },
-                    ),
+                          padding: const EdgeInsets.all(25),
+                          child: Column(
+                            children: [
+                              InputTextWidget(
+                                  controller: _emailController,
+                                  label: "Email",
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Digite o email";
+                                    } else if (!value.contains('@')) {
+                                      return "Digite um email válido";
+                                    }
+                                    return null;
+                                  },
+                                  onChange: (value) {
+                                    //controller.onChanged(email: value);
+                                  }),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              ElevatedButton(
+                                child: Text(
+                                  'Enviar email',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    onPrimary: Colors.purple,
+                                    shadowColor: Colors.purple,
+                                    primary: Colors.white,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50, vertical: 10)),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {}
+                                  // if (controller.login()) {
+                                  //   Navigator.pushReplacementNamed(context, "/home");
+                                  // }
+                                },
+                              ),
+                            ],
+                          ),
+                        )),
                   ]),
             ),
           ),
